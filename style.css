@@ -1,0 +1,171 @@
+#baslik{
+    text-align: center;
+    font-family: 'Rubik Iso', cursive;
+    color: white;
+    padding-top: 3%;
+}
+
+
+.oyunTablo, #collage{
+    background-color:#c2defc;
+    padding:10px 0px;
+    margin: 10px auto;
+    max-width:1500px;
+    width:95%;
+}
+
+
+#sortable, #collage{
+    border:2px solid #a46;
+    list-style-type: none;
+    display: inline-block;
+    margin: 10px;
+    padding: 0;
+    width: 400px;
+}
+
+.ImageBox, #collage{
+    display: inline-block;
+    font-size:0.8em;
+    margin: 10px 10px;
+    vertical-align: top;
+    width:280px;
+}
+
+#collage,#stepBox, #timeBox{
+    display:inline-block;
+    width:48%;
+}
+
+#collage,#actualImage{
+    border:2px solid #a46;
+    height:500px;
+    width:500px;
+    margin-left: 22%;
+    margin-top: 7%;
+}
+
+.scorBoard{
+    background-color:#c2defc;
+    padding:10px 0px;
+    margin: 10px auto;
+    height: 300px;
+    width: 300px;
+    border:2px solid #a46;
+    margin-left: 60%;
+    margin-top: -33%;
+}
+
+#mix-button{
+    margin-left: 64%;
+    margin-top:0%;
+}
+
+#picture-button{
+    margin-left: 70%;
+    margin-top:-4.4%;
+}
+
+@media only screen and (max-width:1500px) and (min-width:1219px){
+
+    .scorBoard{
+        background-color:#c2defc;
+        padding:10px 0px;
+        margin: 10px auto;
+        height: 300px;
+        width: 300px;
+        border:2px solid #a46;
+        margin-left: 68%;
+        margin-top: -40%
+    }
+
+    #mix-button{
+        margin-left: 64%;
+        margin-top:0%;
+    }
+    
+    #picture-button{
+        margin-left: 70%;
+        margin-top:-4.4%;
+    }
+    
+
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1219px) {
+
+    .scorBoard{
+        background-color:#c2defc;
+        padding:10px 0px;
+        margin: 10px auto;
+        height: 300px;
+        width: 300px;
+        border:2px solid #a46;
+        margin-left: 28%;
+        margin-top: 4%
+    }
+
+
+    #mix-button{
+        margin-left: 40%;
+        margin-top:4%;
+    }
+    
+    #picture-button{
+        margin-left: 54%;
+        margin-top:-9%;
+    }
+
+}
+
+@media only screen and (min-width: 479px) and (max-width: 768px) {
+
+    .scorBoard{
+        background-color:#c2defc;
+        padding:10px 0px;
+        margin: 10px auto;
+        height: 300px;
+        width: 300px;
+        border:2px solid #a46;
+        margin-left: 28%;
+        margin-top: 4%
+    }
+
+
+    #mix-button{
+        margin-left: 40%;
+        margin-top:4%;
+    }
+    
+    #picture-button{
+        margin-left: 60%;
+        margin-top:-14%;
+    }
+
+}
+@media only screen and (max-width: 479px) {
+    
+    .scorBoard{
+        background-color:#c2defc;
+        padding:10px 0px;
+        margin: 10px auto;
+        height: 300px;
+        width: 300px;
+        border:2px solid #a46;
+        margin-left: 34%;
+        margin-top: 15%
+    }
+  
+    #mix-button{
+        margin-left: 40%;
+        margin-top:4%;
+    }
+    
+    #picture-button{
+        margin-left: 60%;
+        margin-top:-14%;
+    }
+    
+    
+}
+

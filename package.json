@@ -1,0 +1,16 @@
+{
+  "name": "yazlab-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.2.3",
+    "electron": "^23.2.0",
+    "imagemagick": "^0.1.3"
+  }
+}
