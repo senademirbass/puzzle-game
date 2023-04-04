@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Jigsaw Puzzle</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Jigsaw Puzzle</h1>
+    <div class="puzzle-wrapper">
+      <canvas id="canvas"></canvas>
+    </div>
+    <div class="buttons">
+      <button onclick="shuffle()">Shuffle</button>
+      <input type="file" id="imageInput" accept=".jpg, .jpeg, .png" onchange="loadImage()">
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
