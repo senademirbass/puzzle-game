@@ -10,6 +10,48 @@ class Piece {
   }
 }
 
+class Node {
+  constructor(data) {
+    this.data = data;
+    this.prev = null;
+    this.next = null;
+  }
+}
+
+class PuzzlePiece {
+  constructor(imageUrl, x, y, order) {
+    this.x = x;
+    this.y = y;
+    this.order = order;
+    this.node = new Node(this);
+  }
+}
+
+class Puzzle {
+  constructor(imageUrl, numRows, numCols) {
+    this.pieces = [];
+    this.numRows = numRows;
+    this.numCols = numCols;
+    this.head = null;
+    this.tail = null;
+    this.currentOrder = 0;
+    // Puzzle parçalarını oluşturun ve listeye ekleyin
+    for (let j = 0; j < numCols; j++) {
+      const pieceWidth = Math.floor(image.width / numCols);
+      const pieceHeight = Math.floor(image.height / numRows);
+      const x = j * pieceWidth;
+      const y = i * pieceHeight;
+      const pieceImage = document.createElement('canvas');
+      pieceImage.width = pieceWidth;
+      pieceImage.height = pieceHeight;
+      const pieceImageCtx = pieceImage.getContext('2d');
+      pieceImageCtx.drawImage(image, x, y, pieceWidth, pieceHeight, 0, 0, pieceWidth, pieceHeight);
+      const piece = new PuzzlePiece(x, y, pieceImage.toDataURL());
+      addPieceToList(piece);
+    }
+  }
+}
+
 class LinkedList {
   constructor() {
     this.head = null;
@@ -28,6 +70,22 @@ class LinkedList {
   }
 }
 
+function addPieceToList(piece) {
+  if (!head) {
+    head = piece;
+    tail = piece;
+  } else {
+    tail.next = piece;
+    piece.prev = tail;
+    tail = piece;
+  }
+}
+
+function isCorrect(puzzlePiece) {
+  const piecePosition = puzzlePiece.piece.position;
+  return puzzlePiece.x === piecePosition.x && puzzlePiece.y === piecePosition.y;
+}
+
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 let image = new Image();
@@ -37,6 +95,8 @@ let selectedPiece = null;
 let mouseX = 0;
 let mouseY = 0;
 let linkedList = new LinkedList();
+const correctPieces = new LinkedList();
+
 
 // Load image and break it into pieces
 function loadImage() {
@@ -64,18 +124,20 @@ function loadImage() {
 
       drawPieces(linkedList.head);
       canvas.addEventListener('mousedown', onMouseDown);
-      canvas.addEventListener('mousemove', onMouseMove);
       canvas.addEventListener('mouseup', onMouseUp);
     };
     image.src = reader.result;
   };
 }
 
-function drawPieces(piece) {
+function drawPieces(headPiece) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  let piece = headPiece;
   let prevPiece = null;
   while (piece) {
+    // Parçanın adresini console'a yazdır
+    console.log(piece);
     // Parçalar çizilir
     ctx.putImageData(piece.imageData, piece.x, piece.y);
     ctx.strokeRect(piece.x, piece.y, pieceSize, pieceSize);
@@ -99,27 +161,35 @@ function drawPieces(piece) {
 }
 
 
-// Shuffle puzzle pieces
 function shuffle() {
-  let pieces = [];
+  let imageDataList = [];
   let piece = linkedList.head;
   while (piece) {
-    pieces.push(piece);
+    imageDataList.push(piece.imageData);
     piece = piece.next;
   }
 
-  pieces.forEach(function(piece) {
-    let randomIndex = Math.floor(Math.random() * pieces.length);
-    let temp = piece.imageData;
-    piece.imageData = pieces[randomIndex].imageData;
-    pieces[randomIndex].imageData = temp;
-  });
+  // Shuffle image data list
+  for (let i = imageDataList.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [imageDataList[i], imageDataList[j]] = [imageDataList[j], imageDataList[i]];
+  }
+
+  // Update shuffled image data to pieces
+  let i = 0;
+  piece = linkedList.head;
+  while (piece) {
+    piece.imageData = imageDataList[i];
+    piece = piece.next;
+    i++;
+  }
 
   // Clear canvas before redrawing shuffled pieces
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   
   drawPieces(linkedList.head);
 }
+
 
 function onMouseDown(e) {
   let rect = canvas.getBoundingClientRect();
@@ -133,68 +203,69 @@ function onMouseDown(e) {
       selectedPiece = piece;
       break;
     }
-    piece = piece.next;
-  }
-}
-
-function onMouseMove(e) {
-  let rect = canvas.getBoundingClientRect();
-  let x = e.clientX - rect.left;
-  let y = e.clientY - rect.top;
-
-  if (selectedPiece) {
-    selectedPiece.x = x - pieceSize / 2;
-    selectedPiece.y = y - pieceSize / 2;
-    drawPieces(linkedList.head);
+    piece = piece.next || piece;
   }
 }
 
 function onMouseUp(e) {
-  let rect = canvas.getBoundingClientRect();
-  let x = e.clientX - rect.left;
-  let y = e.clientY - rect.top;
+  const x = e.pageX - canvas.offsetLeft;
+  const y = e.pageY - canvas.offsetTop;
 
-  if (selectedPiece) {
-    let piece = linkedList.head;
-    while (piece) {
-      if (piece !== selectedPiece &&
-          x >= piece.x && x < piece.x + pieceSize &&
-          y >= piece.y && y < piece.y + pieceSize) {
-        // Swap positions of the two pieces
-        let tempX = selectedPiece.x;
-        let tempY = selectedPiece.y;
-        selectedPiece.x = piece.x;
-        selectedPiece.y = piece.y;
-        piece.x = tempX;
-        piece.y = tempY;
-  
-        // Update linked list connections
-        let prevSelectedPiece = selectedPiece.prev;
-        let nextSelectedPiece = selectedPiece.next;
-        let prevPiece = piece.prev;
-        let nextPiece = piece.next;
-        let temp = selectedPiece.next;
-        selectedPiece.next = piece.next;
-        piece.next = temp;
-        temp = selectedPiece.prev;
-        selectedPiece.prev = piece.prev;
-        piece.prev = temp;
-        if (linkedList.head === selectedPiece) {
-          linkedList.head = piece;
-        } else if (linkedList.head === piece) {
-          linkedList.head = selectedPiece;
-        }
-        if (linkedList.tail === selectedPiece) {
-          linkedList.tail = piece;
-        } else if (linkedList.tail === piece) {
-          linkedList.tail = selectedPiece;
-        }
-        
-        drawPieces(linkedList.head);
+  // İlk seçilen parçayı bul
+  let piece1 = linkedList.head;
+  while (piece1) {
+    if (selectedPiece === piece1) {
+      break;
+    }
+    piece1 = piece1.next || piece1;
+  }
+
+  // İkinci seçilen parçayı bul
+  let piece2 = linkedList.head;
+  while (piece2) {
+    if (x >= piece2.x && x < piece2.x + pieceSize &&
+        y >= piece2.y && y < piece2.y + pieceSize &&
+        selectedPiece !== piece2) {
+
+      // İkinci seçilen parça aynı mı?
+      if (lastSelectedPiece === piece2) {
+        selectedPiece = null;
         break;
       }
-      piece = piece.next;
+
+      // İki parçanın yerini değiştir
+      const tempX = piece2.x;
+      const tempY = piece2.y;
+      piece2.x = selectedPiece.x;
+      piece2.y = selectedPiece.y;
+      selectedPiece.x = tempX;
+      selectedPiece.y = tempY;
+      
+      // Seçilen parçaları sıfırla
+      selectedPiece = null;
+      lastSelectedPiece = null;
+      break;
     }
-    selectedPiece = null;
+    piece2 = piece2.next || piece2;
   }
+
+  // Parça seçildi mi?
+  if (piece1 && !selectedPiece) {
+    selectedPiece = piece1;
+    lastSelectedPiece = selectedPiece;
+  }
+
+  drawPieces(linkedList.head);
+}
+
+canvas.addEventListener('mousedown', onMouseDown, false);
+canvas.addEventListener('mouseup', onMouseUp, false);
+
+
+function onMouseDown(e) {
+  console.log('MouseDown event triggered');
+}
+
+function onMouseUp(e) {
+  console.log('MouseUp event triggered');
 }
