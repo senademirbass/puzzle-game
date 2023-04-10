@@ -29,4 +29,5 @@ C. Shuffle butonu oluşan parçaları karıştırarak oyunun
 oynanılmasını sağlar.
 D. Kullanıcı hamle sayısı skor olarak kabul edilir. En az
 sayıda hamle yapan kişi .en yüksek skora sahip kişidir.
+E. Hala geliştirme aşamasındadır.
 
