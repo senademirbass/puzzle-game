@@ -52,7 +52,7 @@ class Puzzle {
   }
 }
 
-class LinkedList {
+class LinkedListt {
   constructor() {
     this.head = null;
     this.tail = null;
