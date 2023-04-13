@@ -7,13 +7,22 @@
 </head>
 <body>
   <div class="container">
-    <h1>Jigsaw Puzzle</h1>
+    <h1 class="baslık">Jigsaw Puzzle</h1>
     <div class="puzzle-wrapper" style="margin-left: 4%;">
       <canvas id="canvas"></canvas>
     </div>
-    <div class="buttons" style="margin-left: 18%;">
-      <button onclick="shuffle()">Shuffle</button>
+    <form>
+      <label for="nickname">Nickname:</label>
+      <input type="text" id="nickname" name="nickname" required>
+      <button type="submit" id="submit-btn">Gönder</button>
+    </form>    
+    <div class="buttons" style="margin-left: 10%;">
+      <button onclick="shuffle()">Karıştır</button>
       <input type="file" id="imageInput" accept=".jpg, .jpeg, .png" onchange="loadImage()">
+    </div>
+    <div class=scoreBoard>
+      <img  id="icon" src="img/win-icon.png" alt="icon" style="float: left;"> 
+      <h3 style="float: left; margin-left: 8%;">SKORUNUZ</h3>
     </div>
   </div>
   <script src="script.js"></script>

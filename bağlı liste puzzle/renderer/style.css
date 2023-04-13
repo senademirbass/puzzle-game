@@ -2,7 +2,42 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background-color: lemonchiffon;
+  background-image: url('https://static.pexels.com/photos/414171/pexels-photo-414171.jpeg');
+  background-size:cover;
+        -webkit-animation: slidein 100s;
+        animation: slidein 100s;
+
+        -webkit-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+
+        -webkit-animation-iteration-count: infinite;
+        animation-iteration-count: infinite;
+
+        -webkit-animation-direction: alternate;
+        animation-direction: alternate;              
+}
+
+@-webkit-keyframes slidein {
+from {background-position: top; background-size:3000px; }
+to {background-position: -100px 0px;background-size:2750px;}
+}
+
+@keyframes slidein {
+from {background-position: top;background-size:3000px; }
+to {background-position: -100px 0px;background-size:2750px;}
+
+}
+
+.baslık{
+  font-family: 'Tilt Prism', cursive;
+}
+
+.scoreBoard{
+  width: 50px;
+  height: 50px;
+  border: solid 2 black;
+  margin-left: 96%;
+  margin-top: -80%;
 }
 
 .container {
@@ -31,7 +66,7 @@ h1 {
 button {
   padding: 10px 20px;
   font-size: 18px;
-  background-color: #007bff;
+  background-color:darkcyan;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -56,4 +91,28 @@ li {
   height: 100px;
   margin-top: 20px;
   padding: 10px;
+}
+
+#imageInput{
+  padding: 10px 20px;
+  font-size: 14px;
+  background-color:darkcyan;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 200px;
+  margin-top: -2%;
+}
+
+form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1;
 }

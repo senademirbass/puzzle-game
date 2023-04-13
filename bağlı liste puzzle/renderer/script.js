@@ -1,3 +1,13 @@
+const form = document.querySelector('form');
+    const submitBtn = document.querySelector('#submit-btn');
+
+    form.addEventListener('submit', (event) => {
+    event.preventDefault(); // formun varsayılan davranışını engeller
+    const nickname = document.querySelector('#nickname').value;
+    form.remove(); // formu sayfadan kaldırır
+});
+
+
 class Piece { 
   constructor(x, y, imageData, originalX, originalY) {
     this.x = x;
@@ -132,6 +142,7 @@ function loadImage() {
       drawPieces(linkedList.head);
       canvas.addEventListener('mousedown', onMouseDown);
       canvas.addEventListener('mouseup', onMouseUp);
+      canvas.addEventListener('mouseup', onMouseMove);
     };
     image.src = reader.result;
   };
@@ -194,7 +205,7 @@ function shuffle() {
   drawPieces(linkedList.head);
 }
 
-// Parçaların orijinal sırasını tutan bağlı liste
+/*// Parçaların orijinal sırasını tutan bağlı liste
 let originalList = new LinkedList();
 
 // Parçaların sürüklendiği yeni sırayı tutan bağlı liste
@@ -323,7 +334,44 @@ function saveOrder() {
     piece.addEventListener('drop', drop);
     piece.addEventListener('dragend', dragEnd);
   });
+}*/
+
+// Handle mouse down event
+function onMouseDown(e) {
+  mouseX = e.offsetX;
+  mouseY = e.offsetY;
+  pieces.forEach(function(piece) {
+    if (mouseX >= piece.x && mouseX < piece.x + pieceSize &&
+        mouseY >= piece.y && mouseY < piece.y + pieceSize) {
+      selectedPiece = piece;
+      selectedPiece.xOffset = mouseX - selectedPiece.x;
+      selectedPiece.yOffset = mouseY - selectedPiece.y;
+    }
+  });
 }
+
+// Handle mouse move event
+function onMouseMove(e) {
+    if (selectedPiece !== null) {
+      selectedPiece.x = e.offsetX - selectedPiece.xOffset;
+      selectedPiece.y = e.offsetY - selectedPiece.yOffset;
+  
+      // Redraw the puzzle pieces
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach(function(piece) {
+        ctx.putImageData(piece.imageData, piece.x, piece.y);
+        ctx.strokeRect(piece.x, piece.y, pieceSize, pieceSize);
+      });
+    }
+  }
+  // Handle mouse up event
+function onMouseUp(e) {
+    if (selectedPiece !== null) {
+      // Set the selected piece to null to release it
+      selectedPiece = null;
+    }
+  }
+  
 
 //Fonksiyonların çalışıp çalışmadığını kontrol etme
 function onMouseDown(e) {
@@ -336,6 +384,7 @@ function onMouseUp(e) {
 function onMouseMove(e) {
   console.log('MouseMove event triggered');
 }
+
 
 
 
