@@ -2,9 +2,9 @@ const form = document.querySelector('form');
     const submitBtn = document.querySelector('#submit-btn');
 
     form.addEventListener('submit', (event) => {
-    event.preventDefault(); // formun varsayılan davranışını engeller
+    event.preventDefault(); // formun varsayılan davranışını engelle
     const nickname = document.querySelector('#nickname').value;
-    form.remove(); // formu sayfadan kaldırır
+    form.remove(); // formu sayfadan kaldır
 });
 
 
@@ -138,11 +138,10 @@ function loadImage() {
           linkedList.addPiece(piece);
         }
       }
-
       drawPieces(linkedList.head);
       canvas.addEventListener('mousedown', onMouseDown);
       canvas.addEventListener('mouseup', onMouseUp);
-      canvas.addEventListener('mouseup', onMouseMove);
+      canvas.addEventListener('mousemove', onMouseMove);
     };
     image.src = reader.result;
   };
@@ -336,7 +335,7 @@ function saveOrder() {
   });
 }*/
 
-// Handle mouse down event
+// Mouse down olayını işle
 function onMouseDown(e) {
   mouseX = e.offsetX;
   mouseY = e.offsetY;
@@ -350,24 +349,20 @@ function onMouseDown(e) {
   });
 }
 
-// Handle mouse move event
+// Mouse taşıma olayını işle
 function onMouseMove(e) {
-    if (selectedPiece !== null) {
-      selectedPiece.x = e.offsetX - selectedPiece.xOffset;
-      selectedPiece.y = e.offsetY - selectedPiece.yOffset;
-  
-      // Redraw the puzzle pieces
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      pieces.forEach(function(piece) {
-        ctx.putImageData(piece.imageData, piece.x, piece.y);
-        ctx.strokeRect(piece.x, piece.y, pieceSize, pieceSize);
-      });
-    }
+  if (selectedPiece) {
+    const mouseX = e.offsetX;
+    const mouseY = e.offsetY;
+    selectedPiece.x = mouseX - selectedPiece.xOffset;
+    selectedPiece.y = mouseY - selectedPiece.yOffset;
+    drawPieces(head);
   }
-  // Handle mouse up event
+}
+  // Mouse up olayını işle
 function onMouseUp(e) {
     if (selectedPiece !== null) {
-      // Set the selected piece to null to release it
+     // Seçili parçayı serbest bırakmak için null olarak ayarla
       selectedPiece = null;
     }
   }
@@ -384,6 +379,10 @@ function onMouseUp(e) {
 function onMouseMove(e) {
   console.log('MouseMove event triggered');
 }
+
+
+
+
 
 
 
