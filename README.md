@@ -17,10 +17,10 @@ ayrılıp oyun olarak oynayabilmektedir.
 • NPM
 
 # AŞAMALAR
-A. İlk olarak vs code üzerinden npm paketlerini yükledik.
+A. İlk olarak vs code üzerinden npm paketleri yüklenir.
 Sonrasında electron.js ve node.js ‘in cihazlarımıza
-kurulumunu sağladık. Vs code üzerinden uygulama
-dosyaları açılıp termminalden npm start komutu ile
+kurulumu sağlanır. Vs code üzerinden uygulama
+dosyaları açılıp terminalden npm start komutu ile
 proje çalıştırılır.
 B. Kullanıcı oyuna kullanıcı adı ile giriş yapar. İstediği bir
 görseli kendi cihazından uygulamaya yükler. Sonrasında
